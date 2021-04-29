@@ -6,7 +6,7 @@ public class HahmoOhjain : MonoBehaviour
 {
     public float juoksuNopeus = 3.0f;
     public float hiireNopeus = 3.0f;
-
+    public CursorLockMode haluttuMoodi;
     private float vertikaalinenPyorinta = 0;
     private float horisontaalinenPyorinta = 0;
     private Vector3 liikesuunta = Vector3.zero;
@@ -15,12 +15,16 @@ public class HahmoOhjain : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        Cursor.lockState = haluttuMoodi;
+        Cursor.visible = (CursorLockMode.Locked != haluttuMoodi);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        horisontaalinenPyorinta += Input.GetAxis("Mouse X") * hiireNopeus;
+        vertikaalinenPyorinta -= Input.GetAxis("Mouse Y") * hiireNopeus;
+
+        Camera.main.transform.localRotation = Quaternion.Euler(vertikaalinenPyorinta,horisontaalinenPyorinta,0);
     }
 }
