@@ -11,7 +11,7 @@ public class HahmoOhjain : MonoBehaviour
     private float horisontaalinenPyorinta = 0;
     private Vector3 liikesuunta = Vector3.zero;
 
-
+    public CharacterController controller;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,5 +26,14 @@ public class HahmoOhjain : MonoBehaviour
         vertikaalinenPyorinta -= Input.GetAxis("Mouse Y") * hiireNopeus;
 
         Camera.main.transform.localRotation = Quaternion.Euler(vertikaalinenPyorinta,horisontaalinenPyorinta,0);
+
+        float nopeusEteen = Input.GetAxis("Vertical");
+        float nopeusSivulle = Input.GetAxis("Horizontal");
+        
+        Vector3 nopeus = new Vector3(nopeusSivulle,0,nopeusEteen);
+        nopeus = transform.rotation * nopeus;
+
+        controller.SimpleMove(nopeus * juoksuNopeus);
+
     }
 }
