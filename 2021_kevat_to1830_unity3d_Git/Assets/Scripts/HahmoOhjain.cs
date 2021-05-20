@@ -6,6 +6,10 @@ public class HahmoOhjain : MonoBehaviour
 {
     public float juoksuNopeus = 3.0f;
     public float hiireNopeus = 3.0f;
+    public float maxKaannosAsteet = 60;
+    public float minKaannosAsteet = -70;
+    public float hyppyNopeus = 10f;
+    public float painovoima = 10f;
     public CursorLockMode haluttuMoodi;
     private float vertikaalinenPyorinta = 0;
     private float horisontaalinenPyorinta = 0;
@@ -25,6 +29,8 @@ public class HahmoOhjain : MonoBehaviour
         horisontaalinenPyorinta += Input.GetAxis("Mouse X") * hiireNopeus;
         vertikaalinenPyorinta -= Input.GetAxis("Mouse Y") * hiireNopeus;
 
+        vertikaalinenPyorinta = Mathf.Clamp(vertikaalinenPyorinta,minKaannosAsteet,maxKaannosAsteet);
+
         Camera.main.transform.localRotation = Quaternion.Euler(vertikaalinenPyorinta,horisontaalinenPyorinta,0);
 
         float nopeusEteen = Input.GetAxis("Vertical");
@@ -34,6 +40,15 @@ public class HahmoOhjain : MonoBehaviour
         nopeus = transform.rotation * nopeus;
 
         controller.SimpleMove(nopeus * juoksuNopeus);
+
+        liikesuunta.y = liikesuunta.y - painovoima * Time.deltaTime;
+
+        controller.Move(liikesuunta *Time.deltaTime);
+
+        if(controller.isGrounded && Input.GetButtonDown("Jump"))
+        {
+            liikesuunta.y += hyppyNopeus;    
+        }
 
     }
 }

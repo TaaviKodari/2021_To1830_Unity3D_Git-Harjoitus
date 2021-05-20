@@ -406,6 +406,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   juoksuNopeus: 3
   hiireNopeus: 3
+  maxKaannosAsteet: 60
+  minKaannosAsteet: -70
+  hyppyNopeus: 100
+  painovoima: 10
   haluttuMoodi: 1
   controller: {fileID: 963194230}
 --- !u!143 &963194230
